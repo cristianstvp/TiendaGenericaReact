@@ -1,10 +1,10 @@
-# Comenzando con Create React App
+# Entornos de Programacion
 
-Este proyecto fue inicializado con [Create React App](https://github.com/facebook/create-react-app).
+Cristian Stivens Villarreal Parra - 2204132
 
-## Scripts Disponibles
+Para este proyecto es necesario tener instalado NodeJS
 
-En el directorio del proyecto, puedes ejecutar:
+## Comandos basicos
 
 ### `npm start`
 
@@ -14,10 +14,26 @@ Abre [http://localhost:3000](http://localhost:3000) para verlo en tu navegador.
 La página se recargará cuando realices cambios.
 También podrás ver cualquier error de estilo en la consola.
 
-### `npm test`
+## Modulos adicionales
 
-Inicia el corredor de pruebas en modo interactivo.
-Consulta la sección sobre cómo [running tests](https://facebook.github.io/create-react-app/docs/running-tests) para más información.
+### `admin-lte`
+
+El mejor panel de administración de código abierto y tema de panel de control. Construido sobre Bootstrap, AdminLTE proporciona una gama de componentes receptivos, reutilizables y de uso común.
+
+`npm install admin-lte@^3.2 --save`
+
+
+
+
+
+
+## Comenzando con Create React App
+
+Este proyecto fue inicializado con [Create React App](https://github.com/facebook/create-react-app).
+
+## Scripts Disponibles
+
+En el directorio del proyecto, puedes ejecutar:
 
 ## Más Información
 
