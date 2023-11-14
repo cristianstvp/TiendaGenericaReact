@@ -14,6 +14,8 @@ Abre [http://localhost:3000](http://localhost:3000) para verlo en tu navegador.
 La página se recargará cuando realices cambios.
 También podrás ver cualquier error de estilo en la consola.
 
+### `npm install`
+
 ## Modulos adicionales
 
 ### `admin-lte`
