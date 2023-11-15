@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Link, useSubmit} from 'react-router-dom';
+import {Link, useSubmit, Navigate} from 'react-router-dom';
 import APIInvoke from "../../utils/APIInvoke";
 import swal from "sweetalert";
 
@@ -23,6 +23,8 @@ const Registro = () => {
     setUsuario({ ...Usuario, [e.target.name]:e.target.value});
   }
 
+  const [redirectLogin, setRedirectLogin] = useState(false); // Nuevo estado para la redirección
+
   const crearCuenta = async() =>{
     const data = {
       nombre: Usuario.nombre,
@@ -34,8 +36,8 @@ const Registro = () => {
     }
     const response = await APIInvoke.invokePOST(`/api/usuarios/`,data);
     console.log(response);
+    setRedirectLogin(true);
   }
-
 
   const onSubmit = (e) =>{
     e.preventDefault();
@@ -46,6 +48,10 @@ const Registro = () => {
     document.getElementById("nombre").focus();
   }, [])
   
+  if (redirectLogin) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="hold-transition register-page">
       <div className="register-box">
