@@ -1,19 +1,21 @@
 import React, {Fragment} from "react";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Login from "./paginas/auth/Login";
+import Registro from "./paginas/auth/Registro";
 
 
 function App() {
 
 
   return (
-    <Fragment>
+    <Fragment> 
       <Router>
         <Routes>
           <Route path="/" exact element={<Login/>}/>
+          <Route path="/Registro" exact element={<Registro/>}/>
         </Routes>
       </Router>
-    </Fragment>
+    </Fragment>/* actua como un div */
   );
 }
 

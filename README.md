@@ -16,13 +16,19 @@ También podrás ver cualquier error de estilo en la consola.
 
 ## Modulos adicionales
 
-### `npm install`
+### Modulos basicos
 
-### `npm install react-router-dom`
+`npm install`
 
-### `admin-lte`
+### react-router-dom
 
-El mejor panel de administración de código abierto y tema de panel de control. Construido sobre Bootstrap, AdminLTE proporciona una gama de componentes receptivos, reutilizables y de uso común.
+permite la navegacion entre paginas 
+
+`npm install --save react-router-dom`
+
+### admin-lte
+
+Panel de administración de código abierto y tema de panel de control. Construido sobre Bootstrap, AdminLTE proporciona una gama de componentes receptivos, reutilizables y de uso común.
 
 `npm install admin-lte@^3.2 --save`
 
