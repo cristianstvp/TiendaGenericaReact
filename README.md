@@ -18,6 +18,8 @@ También podrás ver cualquier error de estilo en la consola.
 
 ### `npm install`
 
+### `npm install react-router-dom`
+
 ### `admin-lte`
 
 El mejor panel de administración de código abierto y tema de panel de control. Construido sobre Bootstrap, AdminLTE proporciona una gama de componentes receptivos, reutilizables y de uso común.
