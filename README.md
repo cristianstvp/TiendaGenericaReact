@@ -26,11 +26,16 @@ permite la navegacion entre paginas
 
 `npm install --save react-router-dom`
 
+### sweetalert
+
+`npm install sweetalert`
+
+
 ### admin-lte
 
 Panel de administración de código abierto y tema de panel de control. Construido sobre Bootstrap, AdminLTE proporciona una gama de componentes receptivos, reutilizables y de uso común.
 
-`npm install admin-lte@^3.2 --save`
+
 
 
 
