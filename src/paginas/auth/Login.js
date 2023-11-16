@@ -27,7 +27,7 @@ const Login = () => {
 
   const iniciarSesion = async () => {
     if (password.length < 2) {
-      const msg = "the pw is too short";
+      const msg = "La contraseña es muy corta";
       swal({
         title: 'Wrong',
         text: msg,
@@ -48,12 +48,12 @@ const Login = () => {
         password: usuario.password
       }
       console.log(data);
-      const response = await APIInvoke.invokePOST(`/api/usuarios/loginclient`,data);
+      const response = await APIInvoke.invokePOST(`/api/usuarios/login`,data);
       console.log(response);
-      if (response != 1) {
-        const msg = "No fue posible";
+      if (response.Mensaje != "Datos correctos" ) {
+        const msg = "No fue posible iniciar secion. Revise los datos";
         swal({
-          title: 'Wrong',
+          title: 'Inicio Fallido',
           text: msg,
           icon: 'error',
           buttons: {
@@ -66,8 +66,34 @@ const Login = () => {
             }
           }
         });
+      }else
+      {
+        const datos = response;
+
+        //guardamos los datos en el localstorage
+        localStorage.setItem('DatosUsuario', datos)
+
+        const msg = "Bienvenido";
+        swal({
+          title: 'Inicio Exitoso',
+          text: `${msg},  ${response.Usuario.nombre}`,
+          icon: 'success',
+          buttons: {
+            confirm: {
+              text: 'Ok',
+              value: true,
+              visible: true,
+              className: 'btn btn-danger',
+              closeModal: true
+            }
+          }
+        });
+
+        //Redireccionamos a home
+        navigate('/home');
+
       }
-      
+
     }
   }
 
