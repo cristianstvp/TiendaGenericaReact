@@ -26,79 +26,17 @@ const Registro = () => {
   const [redirectLogin, setRedirectLogin] = useState(false); // Nuevo estado para la redirección
 
   const crearCuenta = async() =>{
-
-    if (password !== confirmar){
-      const msg = "the Passwords are diferents";
-      swal ({
-        title: 'Wrong',
-        text: msg,
-        icon: 'error',
-        buttons: {
-          confirm: {
-            text: 'Ok',
-            value: true,
-            visible: true,
-            className: 'btn btn-danger',
-            closeModal: true
-          }
-        }
-      });
-    }else if(password.length < 6){
-      const data = {
-        nombre: Usuario.nombre,
-        idTipoDocumento: Usuario.idTipoDocumento,
-        numeroDocumento: Usuario.numeroDocumento,
-        nombreUsuario: Usuario.nombreUsuario,
-        email: Usuario.email,
-        password: Usuario.password
-      }
-      const response = await APIInvoke.invokePOST(`/api/usuarios/`,data);
-      console.log(response);
-      setRedirectLogin(true);
-      const mensaje = response.msg;
-      console.log(mensaje)
-
-      if(mensaje == 'El usuario ya existe'){
-        const msg = "the user exist";
-        swal ({
-          title: 'Wrong',
-          text: msg,
-          icon: 'error',
-          buttons: {
-            confirm: {
-              text: 'Ok',
-              value: true,
-              visible: true,
-              className: 'btn btn-danger',
-              closeModal: true
-            }
-          }
-        });
-      
-        
-
-      }else if(password.length < 6){
-        const msg = "the pw is too short";
-        swal ({
-          title: 'Wrong',
-          text: msg,
-          icon: 'error',
-          buttons: {
-            confirm: {
-              text: 'Ok',
-              value: true,
-              visible: true,
-              className: 'btn btn-danger',
-              closeModal: true
-            }
-          }
-        });
-
-        
-      }
-
+    const data = {
+      nombre: Usuario.nombre,
+      idTipoDocumento: Usuario.idTipoDocumento,
+      numeroDocumento: Usuario.numeroDocumento,
+      nombreUsuario: Usuario.nombreUsuario,
+      email: Usuario.email,
+      password: Usuario.password
     }
- 
+    const response = await APIInvoke.invokePOST(`/api/usuarios/`,data);
+    console.log(response);
+    setRedirectLogin(true);
   }
 
   const onSubmit = (e) =>{

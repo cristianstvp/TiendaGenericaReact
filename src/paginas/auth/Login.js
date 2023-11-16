@@ -10,19 +10,13 @@ const Login = () => {
   const navigate = useNavigate();
 
   //definimos el estado inicial
-  const [usuario, setUsuario] = useState({
-    nombreUsuario: '',
-    password: ''
-  });
+  const [usuario, setUsuario] = useState({nombreUsuario: '',password: ''});
 
   const { nombreUsuario, password } = usuario;
 
   const onChange = (e) => {
     setUsuario(e.target.value);
-    setUsuario({
-      ...usuario,
-      [e.target.name]: e.target.value
-    });
+    setUsuario({...usuario, [e.target.name]: e.target.value});
   }
 
   const onSubmit = (e) => {
@@ -55,9 +49,8 @@ const Login = () => {
       }
       console.log(data);
       const response = await APIInvoke.invokePOST(`/api/usuarios/loginclient`,data);
-      const mensaje = response.msg;
-      console.log(response.msg);
-      if (mensaje != 1) {
+      console.log(response);
+      if (response != 1) {
         const msg = "No fue posible";
         swal({
           title: 'Wrong',
@@ -74,6 +67,7 @@ const Login = () => {
           }
         });
       }
+      
     }
   }
 
