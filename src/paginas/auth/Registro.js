@@ -125,7 +125,7 @@ const Registro = () => {
         <div className="card">
           <div className="card-body register-card-body">
             <p className="login-box-msg">Registro</p>
-              <form   onSubmit={onSubmit}>
+              <form onSubmit={onSubmit}>
                 <div className="input-group mb-3">
                   <input
                     type="text"

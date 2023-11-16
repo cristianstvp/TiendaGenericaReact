@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from'react-router-dom';
 import APIInvoke from "../../utils/APIInvoke";
 import swal from "sweetalert";
 
@@ -11,28 +11,28 @@ const Login = () => {
 
   //definimos el estado inicial
   const [usuario, setUsuario] = useState({
-    email: '',
+    nombreUsuario: '',
     password: ''
   });
 
-  const { email, password } = usuario;
+  const { nombreUsuario, password } = usuario;
 
   const onChange = (e) => {
+    setUsuario(e.target.value);
     setUsuario({
       ...usuario,
       [e.target.name]: e.target.value
-    })
+    });
   }
 
-
-
   const onSubmit = (e) => {
+    console.log("onsubmit");
     e.preventDefault();
     iniciarSesion();
   }
 
   const iniciarSesion = async () => {
-    if (password.length < 6) {
+    if (password.length < 2) {
       const msg = "the pw is too short";
       swal({
         title: 'Wrong',
@@ -48,8 +48,33 @@ const Login = () => {
           }
         }
       });
+    }else{
+      const data = {
+        nombreUsuario: usuario.nombreUsuario,
+        password: usuario.password
+      }
+      console.log(data);
+      const response = await APIInvoke.invokePOST(`/api/usuarios/loginclient`,data);
+      const mensaje = response.msg;
+      console.log(response.msg);
+      if (mensaje != 1) {
+        const msg = "No fue posible";
+        swal({
+          title: 'Wrong',
+          text: msg,
+          icon: 'error',
+          buttons: {
+            confirm: {
+              text: 'Ok',
+              value: true,
+              visible: true,
+              className: 'btn btn-danger',
+              closeModal: true
+            }
+          }
+        });
+      }
     }
-
   }
 
   return (
@@ -61,15 +86,16 @@ const Login = () => {
         <div className="card">
           <div className="card-body login-card-body">
             <p className="login-box-msg">Bienvenido</p>
-            <form action="../../index3.html" method="post">
+
+            <form onSubmit={onSubmit}>
               <div className="input-group mb-3">
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
-                  placeholder="Correo"
-                  id="email"
-                  name="email"
-                  value={email}
+                  placeholder="Nombre de Usuario"
+                  id="emnombreUsuarioail"
+                  name="nombreUsuario"
+                  value={nombreUsuario}
                   onChange={onChange}
                   required
                 />
@@ -97,12 +123,12 @@ const Login = () => {
                   </div>
                 </div>
               </div>
-
+              <div className="social-auth-links text-center mb-3">
+                <button type='submit' className="btn btn-block btn-primary"> Ingresar</button>
+                <Link to={"/Registro"} className="btn btn-block btn-danger">Registrarse</Link>
+              </div>
             </form>
-            <div className="social-auth-links text-center mb-3">
-              <button type='submit' className="btn btn-block btn-primary">Ingresar</button>
-              <Link to={"/Registro"} className="btn btn-block btn-danger">Registrarse</Link>
-            </div>
+            
           </div>
         </div>
       </div>
