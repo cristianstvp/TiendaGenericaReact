@@ -113,7 +113,7 @@ const Login = () => {
                   type="text"
                   className="form-control"
                   placeholder="Nombre de Usuario"
-                  id="emnombreUsuarioail"
+                  id="nombreUsuario"
                   name="nombreUsuario"
                   value={nombreUsuario}
                   onChange={onChange}
