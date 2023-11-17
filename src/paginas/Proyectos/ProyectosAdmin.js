@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from '../../componentes/Navbar';
 import SidebarContainer from '../../componentes/SidebarContainer';
 import ContentHeader from '../../componentes/ContentHeader';
 import Footer from '../../componentes/Footer';
-import { Link } from 'react-router-dom';
+import APIInvoke from '../../utils/APIInvoke';
 
 const ProyectosAdmin = () => {
+    const [proyectos, setProyectos] = useState([]);
+
+    const cargarProyectos = async () => {
+        const response = await APIInvoke.invokeGET('/api/usuarios/list')
+        console.log(response);
+        setProyectos(response);
+    }
+
+    useEffect(() => {
+        cargarProyectos();
+    }, [])
+
     return (<div className="wrapper">
         <Navbar></Navbar>
         <SidebarContainer></SidebarContainer>
@@ -59,22 +71,34 @@ const ProyectosAdmin = () => {
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Usuario</th>
+                                                <th >Usuario</th>
                                                 <th>Tipo Documento</th>
                                                 <th>Numero Documento</th>
                                                 <th>Nombre</th>
                                                 <th>Email</th>
                                                 <th>Password</th>
+                                                <th>Opciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>183</td>
-                                                <td>John Doe</td>
-                                                <td>11-7-2014</td>
-                                                <td><span className="tag tag-success">Approved</span></td>
-                                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                            </tr>
+                                            {
+                                                proyectos.map(
+                                                    item =>
+                                                        <tr key={item.id}>
+                                                            <td>{item.id}</td>
+                                                            <td>{item.nombreUsuario}</td>
+                                                            <td>{item.idTipoDocumento.tipo}</td>
+                                                            <td>{item.numeroDocumento}</td>
+                                                            <td>{item.nombre}</td>
+                                                            <td>{item.email}</td>
+                                                            <td>{item.password}</td>
+                                                            <td>
+                                                                <button className='btn btn-sm btn-primary'>Editar</button>&nbsp;&nbsp;
+                                                                <button className='btn btn-sm btn-danger'>Borrar</button>
+                                                            </td>
+                                                        </tr>
+                                                )
+                                            }
                                         </tbody>
                                     </table>
                                 </div>

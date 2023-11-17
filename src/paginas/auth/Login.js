@@ -71,7 +71,7 @@ const Login = () => {
         const datos = response;
 
         //guardamos los datos en el localstorage
-        localStorage.setItem('DatosUsuario', datos)
+        localStorage.setItem('DatosUsuario', datos.Usuario)
 
         const msg = "Bienvenido";
         swal({
