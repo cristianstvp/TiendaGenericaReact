@@ -135,7 +135,7 @@ const ProyectosAdmin = () => {
                                                             <td>{item.email}</td>
                                                             <td>{item.password}</td>
                                                             <td>
-                                                                <button className='btn btn-sm btn-primary'>Editar</button>&nbsp;&nbsp;
+                                                                <Link to={`/Proyectos-editar/${item.id}@${item.nombreUsuario}@${item.idTipoDocumento.id_tipodocumento}@${item.numeroDocumento}@${item.nombre}@${item.email}@${item.password}`} className='btn btn-sm btn-primary'>Editar</Link>&nbsp;&nbsp;
                                                                 <button onClick={(e) => eliminarProyecto(e, item.id)} className='btn btn-sm btn-danger'>Borrar</button>
                                                             </td>
                                                         </tr>

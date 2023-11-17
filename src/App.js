@@ -9,7 +9,6 @@ import ProyectosEditar from "./paginas/Proyectos/ProyectosEditar";
 
 function App() {
 
-
   return (
     <Fragment> 
       <Router>

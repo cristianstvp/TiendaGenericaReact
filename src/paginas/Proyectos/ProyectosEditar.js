@@ -11,118 +11,203 @@ import { useNavigate, useParams } from 'react-router-dom';
 const ProyectosEditar = () => {
 
     const navigate = useNavigate();
-    const {idproyecto} = useParams();
+
+    const { idproyecto } = useParams();
+
     let arreglo = idproyecto.split('@');
-    const idP = arreglo[0];
-    const nombreProyecto = arreglo[1];
+    const idUs = arreglo[0];
+    const NombreUs = arreglo[1];
+    const idTipoDocUs = arreglo[2];
+    const NumDocUs = arreglo[3];
+    const nombreCompletoUs = arreglo[4];
+    const emailUs = arreglo[5];
+    const passwordUs = arreglo[6];
 
     const [proyectos, setProyectos] = useState({
-        nombre: nombreProyecto
+        idTipoDocumento: idTipoDocUs,
+        numeroDocumento: NumDocUs,
+        nombre: nombreCompletoUs,
+        password: passwordUs,
+        nombreUsuario: NombreUs,
+        email: emailUs
     });
 
-    const {nombre} = proyectos;
+    const { idTipoDocumento, numeroDocumento, email, nombre, password, confirmar, nombreUsuario } = proyectos;
+
+    useEffect(() => {
+        document.getElementById("nombre").focus();
+    }, [])
+
+    const onChange = (e) => {
+        setProyectos(e.target.value);
+
+        setProyectos({ ...proyectos, [e.target.name]: e.target.value });
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        editarProyecto();
+    }
+
+    const editarProyecto = async () => {
+        let arreglo = idproyecto.split('@');
+        const idProyecto = arreglo[0];
+
+        const data = {
+            id:idProyecto,
+            idTipoDocumento: proyectos.idTipoDocumento,
+            numeroDocumento: proyectos.numeroDocumento,
+            nombre: proyectos.nombre,
+            password: proyectos.password,
+            nombreUsuario: proyectos.nombreUsuario,
+            email: proyectos.email
+        }
+
+        const response = await APIInvoke.invokePUT(`/api/usuarios/`, data);
+        const idProyectoEditado = response.id;
+        console.log(response);
+        if (idProyectoEditado != idProyecto) {
+            const msg = "No fue posible Actualizar el usuario";
+            swal({
+                title: 'Actualizacion Fallida',
+                text: msg,
+                icon: 'error',
+                buttons: {
+                    confirm: {
+                        text: 'Ok',
+                        value: true,
+                        visible: true,
+                        className: 'btn btn-danger',
+                        closeModal: true
+                    }
+                }
+            });
+        } else {
+            navigate('/Proyectos-Admin')
+            const msg = "Usuario Creado";
+            swal({
+                title: 'OK',
+                text: msg,
+                icon: 'success',
+                buttons: {
+                    confirm: {
+                        text: 'Ok',
+                        value: true,
+                        visible: true,
+                        className: 'btn btn-danger',
+                        closeModal: true
+                    }
+                }
+            });
+        }
+    }
 
     return (
-        <div className="wrapper">
-            <Navbar></Navbar>
-            <SidebarContainer></SidebarContainer>
-            <div className="content-wrapper">
-
-                <ContentHeader
-                    Titulo={'Edición del Proyecto'}
-                    breadcrumb1={'Listado del Proyecto'}
-                    breadcrumb2={'Edición'}
-                    ruta={'/home'}
-                />
-
-                <section className="content">
-                    <div className='container-fluid'>
-                        <div className="card">
-                            <div className="card-header">
-                                <h3 className="card-title"><Link to={"/Proyectos-Registro"} className="btn btn-block btn-primary">Crear Usuario</Link></h3>
-                                <div className="card-tools">
-                                    <button type="button" className="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                        <i className="fas fa-minus" />
-                                    </button>
-                                    <button type="button" className="btn btn-tool" data-card-widget="remove" title="Remove">
-                                        <i className="fas fa-times" />
-                                    </button>
-                                </div>
+        <div className="hold-transition register-page">
+            <div className="register-box">
+                <div className="register-logo">
+                    <Link to={"#"}>
+                        <b>Bienvenido</b> Usuario
+                    </Link>
+                </div>
+                <div className="card">
+                    <div className="card-body register-card-body">
+                        <p className="login-box-msg">Registro</p>
+                        <form onSubmit={onSubmit}>
+                            <div className="input-group mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Nombre completo"
+                                    id="nombre"
+                                    name="nombre"
+                                    value={nombre}
+                                    onChange={onChange}
+                                    required
+                                />
                             </div>
-                            <div className="card-body">
 
-                                Start creating your amazing application!
-                                
+                            <div className="input-group mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Nombre de Usuario"
+                                    id="nombreUsuario"
+                                    name="nombreUsuario"
+                                    value={nombreUsuario}
+                                    onChange={onChange}
+                                    required
+                                />
                             </div>
-                            <div className="card-footer">
-                                Footer
+
+                            <div className="input-group mb-3">
+                                <select
+                                    className="form-control"
+                                    value={idTipoDocumento}
+                                    id="idTipoDocumento"
+                                    name="idTipoDocumento"
+                                    onChange={onChange}
+                                    required
+                                >
+                                    <option value="">Selecciona un tipo de documento</option>
+                                    <option value="5">Cédula</option>
+                                    <option value="6">Tarjeta</option>
+                                    <option value="7">Pasaporte</option>
+                                </select>
                             </div>
-                        </div>
 
-                        <div className="row">
-                            <div className="col-12">
-                                <div className="card">
-                                    <div className="card-header">
-                                        <h3 className="card-title">Responsive Hover Table</h3>
-                                        <div className="card-tools">
-                                            <div className="input-group input-group-sm" style={{ width: 150 }}>
-                                                <input type="text" name="table_search" className="form-control float-right" placeholder="Search" />
-                                                <div className="input-group-append">
-                                                    <button type="submit" className="btn btn-default">
-                                                        <i className="fas fa-search" />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="card-body table-responsive p-0">
-                                        <table className="table table-hover text-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th >Usuario</th>
-                                                    <th>Tipo Documento</th>
-                                                    <th>Numero Documento</th>
-                                                    <th>Nombre</th>
-                                                    <th>Email</th>
-                                                    <th>Password</th>
-                                                    <th>Opciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {
-                                                    proyectos.map(
-                                                        item =>
-                                                            <tr key={item.id}>
-                                                                <td>{item.id}</td>
-                                                                <td>{item.nombreUsuario}</td>
-                                                                <td>{item.idTipoDocumento.tipo}</td>
-                                                                <td>{item.numeroDocumento}</td>
-                                                                <td>{item.nombre}</td>
-                                                                <td>{item.email}</td>
-                                                                <td>{item.password}</td>
-                                                                <td>
-                                                                    
-                                                                    <link to ={`/ProyectosEditar/${item.id}@${item.nombreUsuario}`}className='btn btn-sm btn-primary'>Editar</link>&nbsp;&nbsp;
-
-                                                                </td>
-                                                            </tr>
-                                                    )
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                            <div className="input-group mb-3">
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    placeholder="Numero de documento"
+                                    id="numeroDocumento"
+                                    name="numeroDocumento"
+                                    value={numeroDocumento}
+                                    onChange={onChange}
+                                    required
+                                />
                             </div>
-                        </div>
 
+                            <div className="input-group mb-3">
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    placeholder="Email"
+                                    id="email"
+                                    name="email"
+                                    value={email}
+                                    onChange={onChange}
+                                    required
+                                />
+                            </div>
 
+                            <div className="input-group mb-3">
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    placeholder="Contraseña"
+                                    id="password"
+                                    name="password"
+                                    value={password}
+                                    onChange={onChange}
+                                    required
+                                />
+                            </div>
+                            <div className="social-auth-links text-center">
+                                <button type='submit' className="btn btn-block btn-primary">
+                                    Registrarme
+                                </button>
+                            </div>
+                            <Link to={"/Proyectos-Admin"} className="btn btn-block btn-danger">
+                                Ya no quiero editar
+                            </Link>
+                        </form>
 
                     </div>
-                </section>
+                </div>
             </div>
-            <Footer></Footer>
-        </div >
+        </div>
     );
 
 }
