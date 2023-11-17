@@ -4,6 +4,8 @@ import SidebarContainer from '../../componentes/SidebarContainer';
 import ContentHeader from '../../componentes/ContentHeader';
 import Footer from '../../componentes/Footer';
 import APIInvoke from '../../utils/APIInvoke';
+import swal from "sweetalert";
+import { Link } from 'react-router-dom';
 
 const ProyectosAdmin = () => {
     const [proyectos, setProyectos] = useState([]);
@@ -17,6 +19,46 @@ const ProyectosAdmin = () => {
     useEffect(() => {
         cargarProyectos();
     }, [])
+
+    const eliminarProyecto = async (e, idProyecto) => {
+        e.preventDefault();
+        const response = await APIInvoke.invokeDELETE(`/api/usuarios/${idProyecto}`);
+        console.log(response)
+        if (response.id == idProyecto) {
+            const msg = "El Usuario fue borrado exitosamente"
+            swal({
+                title: 'El usuario fue borrado',
+                text: msg,
+                icon: 'success',
+                buttons: {
+                    confirm: {
+                        text: 'Ok',
+                        value: true,
+                        visible: true,
+                        className: 'btn btn-danger',
+                        closeModal: true
+                    }
+                }
+            });
+            cargarProyectos();
+        } else {
+            const msg = "El usuario no fue borrado"
+            swal({
+                title: 'Error',
+                text: msg,
+                icon: 'error',
+                buttons: {
+                    confirm: {
+                        text: 'Ok',
+                        value: true,
+                        visible: true,
+                        className: 'btn btn-danger',
+                        closeModal: true
+                    }
+                }
+            });
+        }
+    }
 
     return (<div className="wrapper">
         <Navbar></Navbar>
@@ -32,7 +74,7 @@ const ProyectosAdmin = () => {
                 <div className='container-fluid'>
                     <div className="card">
                         <div className="card-header">
-                            <h3 className="card-title">Title</h3>
+                            <h3 className="card-title"><Link to={"/Proyectos-Registro"} className="btn btn-block btn-primary">Crear Usuario</Link></h3>
                             <div className="card-tools">
                                 <button type="button" className="btn btn-tool" data-card-widget="collapse" title="Collapse">
                                     <i className="fas fa-minus" />
@@ -94,7 +136,7 @@ const ProyectosAdmin = () => {
                                                             <td>{item.password}</td>
                                                             <td>
                                                                 <button className='btn btn-sm btn-primary'>Editar</button>&nbsp;&nbsp;
-                                                                <button className='btn btn-sm btn-danger'>Borrar</button>
+                                                                <button onClick={(e) => eliminarProyecto(e, item.id)} className='btn btn-sm btn-danger'>Borrar</button>
                                                             </td>
                                                         </tr>
                                                 )
